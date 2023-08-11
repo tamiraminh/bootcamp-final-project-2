@@ -49,7 +49,7 @@ func (h *UserHandler) Router(r chi.Router)  {
 // CreateFoo creates a new User.
 // @Summary Create a new User.
 // @Description This endpoint creates a new User.
-// @Tags v1/users
+// @Tags v1/Auth
 // @Param user body user.UserRequestFormat true "The user to be created."
 // @Produce json
 // @Success 201 {object} response.Base{data=user.UserResponseFormat}
@@ -79,7 +79,7 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Login User
 // @Description This endpoint is to user login and get access token.
-// @Tags v1/users
+// @Tags v1/Auth
 // @Param user body user.LoginRequestFormat true "The user to be created."
 // @Produce json
 // @Success 200 {object} response.Base{data=user.LoginResponseFormat}
@@ -109,7 +109,7 @@ func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Resolve Profile User by ID
 // @Description This endpoint resolves a detail user by its ID.
-// @Tags v1/users
+// @Tags v1/User
 // @Security JWTToken
 // @Produce json
 // @Success 200 {object} response.Base{data=user.UserResponseFormat}
@@ -135,7 +135,7 @@ func (h *UserHandler) Profile(w http.ResponseWriter, r *http.Request) {
 
 // @Summary validate jwt token
 // @Description This endpoint is to validate user. This is done by
-// @Tags v1/users
+// @Tags v1/Auth
 // @Security JWTToken
 // @Produce json
 // @Success 200 {object} response.Base{data=jwtmodel.Claims}
@@ -157,7 +157,7 @@ func (h *UserHandler) Validate(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Update a User.
 // @Description This endpoint updates an existing User.
-// @Tags v1/users
+// @Tags v1/User
 // @Security JWTToken
 // @Param foo body user.UserRequestFormat true "The user to be updated."
 // @Produce json
