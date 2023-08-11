@@ -45,6 +45,18 @@ func (h *UserHandler) Router(r chi.Router)  {
 	
 }
 
+
+// CreateFoo creates a new User.
+// @Summary Create a new User.
+// @Description This endpoint creates a new User.
+// @Tags v1/users
+// @Param user body user.UserRequestFormat true "The user to be created."
+// @Produce json
+// @Success 201 {object} response.Base{data=user.UserResponseFormat}
+// @Failure 400 {object} response.Base
+// @Failure 409 {object} response.Base
+// @Failure 500 {object} response.Base
+// @Router /v1/users [post]
 func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var requestFormat user.UserRequestFormat
@@ -65,7 +77,16 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 
-
+// @Summary Login User
+// @Description This endpoint is to user login and get access token.
+// @Tags v1/users
+// @Param user body user.LoginRequestFormat true "The user to be created."
+// @Produce json
+// @Success 200 {object} response.Base{data=user.LoginResponseFormat}
+// @Failure 400 {object} response.Base
+// @Failure 404 {object} response.Base
+// @Failure 500 {object} response.Base
+// @Router /v1/users/login [post]
 func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var requestFormat user.LoginRequestFormat
@@ -86,6 +107,16 @@ func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 
+// @Summary Resolve Profile User by ID
+// @Description This endpoint resolves a detail user by its ID.
+// @Tags v1/users
+// @Security JWTToken
+// @Produce json
+// @Success 200 {object} response.Base{data=user.UserResponseFormat}
+// @Failure 400 {object} response.Base
+// @Failure 404 {object} response.Base
+// @Failure 500 {object} response.Base
+// @Router /v1/users/profile [get]
 func (h *UserHandler) Profile(w http.ResponseWriter, r *http.Request) {
 	claims, ok := r.Context().Value(middleware.ClaimsKey("claims")).(*jwtmodel.Claims)
 	if !ok {
@@ -102,7 +133,16 @@ func (h *UserHandler) Profile(w http.ResponseWriter, r *http.Request) {
 	response.WithJSON(w, http.StatusCreated, user)
 }
 
-
+// @Summary validate jwt token
+// @Description This endpoint is to validate user. This is done by
+// @Tags v1/users
+// @Security JWTToken
+// @Produce json
+// @Success 200 {object} response.Base{data=jwtmodel.Claims}
+// @Failure 400 {object} response.Base
+// @Failure 409 {object} response.Base
+// @Failure 500 {object} response.Base
+// @Router /v1/users/validate [get]
 func (h *UserHandler) Validate(w http.ResponseWriter, r *http.Request) {
 	
 	claims, ok := r.Context().Value(middleware.ClaimsKey("claims")).(*jwtmodel.Claims)
@@ -115,7 +155,17 @@ func (h *UserHandler) Validate(w http.ResponseWriter, r *http.Request) {
 	response.WithJSON(w, http.StatusOK, claims)
 }
 
-
+// @Summary Update a User.
+// @Description This endpoint updates an existing User.
+// @Tags v1/users
+// @Security JWTToken
+// @Param foo body user.UserRequestFormat true "The user to be updated."
+// @Produce json
+// @Success 200 {object} response.Base{data=foobarbaz.FooResponseFormat}
+// @Failure 400 {object} response.Base
+// @Failure 409 {object} response.Base
+// @Failure 500 {object} response.Base
+// @Router /v1/users/profile [put]
 func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	claims, ok := r.Context().Value(middleware.ClaimsKey("claims")).(*jwtmodel.Claims)
